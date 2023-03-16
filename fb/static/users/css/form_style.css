@@ -1,0 +1,65 @@
+body {
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .card h2 {
+    color: #222;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .card input[type="text"],
+  .card input[type="password"] {
+    background-color: #f9f9f9;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #222;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .card input[type="submit"] {
+    background-color: #fec31a;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .card input[type="submit"]:hover {
+    background-color: #ffce1a;
+  }
+  
+  .card p {
+    color: #222;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .card form {
+    margin-top: 20px;
+  }
+  
+  .card form div {
+    margin-bottom: 20px;
+  }
+  

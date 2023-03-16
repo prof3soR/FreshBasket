@@ -1,0 +1,117 @@
+{% extends "users/base.html" %}
+
+{% block content %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+.filter__container {
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.filter__item a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.filter__item.active a {
+  font-weight: bold;
+}
+
+.filter__search-input {
+  border-radius: 20px;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+.card-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.btn-primary {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+@media (min-width: 992px) {
+  .filter__form {
+    width: 80%;
+  }
+}
+</style>
+
+<div class="container">
+  <div class="row no-gutters">
+    <div class="col-md-3 bg-dark filter__container">
+      <div class="filter-container">
+        <h4 class="filter__heading text-white mb-4">Filter by category:</h4>
+        <ul class="filter__list list-unstyled">
+          <li class="filter__item {% if not category %}active{% endif %}">
+            <a href="{% url 'menu' %}" class="filter__link">All</a>
+          </li>
+          {% for c in categories %}
+            <li class="filter__item {% if category == c.name %}active{% endif %}">
+              <a href="?category={{ c.name }}" class="filter__link">{{ c.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="col-md-5 mb-4">
+      <form method="get" action="{% url 'menu' %}" class="filter__form">
+        <div class="input-group">
+          <input type="text" name="query" value="{{ query }}" class="form-control filter__search-input" placeholder="Search item...">
+          <div class="input-group-append">
+            <span class="input-group-text filter__search-icon"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      {% for item in items %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+          <div class="card h-100">
+            <img class="card-img-top" style="height: 8rem; object-fit: cover;" src="{{ item.image.url }}" alt="{{ item.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              <p class="card-text">₹{{ item.price }}</p>
+              <form method="POST" action="{% url 'add_to_bag' %}">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                  <input type="text" name="quantity" placeholder="{{item.quantity_type}}" class="form-control">
+                  <input type="hidden" name="item_id" value="{{ item.name }}">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Add to Bag</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No menu items yet.</p>
+      {% endfor %}
+    </div>
+    
+    {% endblock content %}

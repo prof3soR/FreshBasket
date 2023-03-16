@@ -1,0 +1,134 @@
+/* Global styles */
+
+body {
+  background-color: #00fff2;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #343a40;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e5f51;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+nav a {
+  color: #1e5f51;
+  text-decoration: none;
+  font-size: 1.1rem;
+  margin-right: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+nav ul {
+  list-style: none;
+}
+
+/* Main content */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.filter {
+  flex-basis: 25%;
+  padding-right: 20px;
+}
+
+.filter__heading {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.filter__list {
+  margin-bottom: 20px;
+}
+
+.filter__item {
+  margin-bottom: 10px;
+}
+
+.filter__link {
+  color: #343a40;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter__link:hover {
+  color: #007bff;
+}
+
+.filter__form {
+  margin-bottom: 20px;
+}
+
+.filter__search-input {
+  border-radius: 0;
+}
+
+.filter__search-icon {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0;
+}
+
+.card {
+  border-radius: 0;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-4px);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  color: #868e96;
+  margin-bottom: 10px;
+}
+
+.btn {
+  background-color: #007bff;
+  border: none;
+  border-radius: 0;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #0062cc;
+}

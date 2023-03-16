@@ -1,0 +1,102 @@
+<style>
+    .navbar {
+        background-color: #222;
+    }
+    
+    .navbar-brand {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.5rem;
+        color: #FEC31A;
+        letter-spacing: 2px;
+    }
+    
+    .navbar-brand:hover {
+        color: #FEC31A;
+    }
+    
+    .nav-link {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.8rem;
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+    }
+    
+    .nav-link:hover {
+        color: #FEC31A;
+    }
+    
+    .login-icon {
+        font-size: 0.6rem;
+        color: #FEC31A;
+        margin-right: 0.5rem;
+    }
+    
+    .signup-icon {
+        font-size: 0.6rem;
+        color: #FEC31A;
+        margin-right: 0.5rem;
+    }
+    
+    .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="%23fff" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+    }
+    
+    @media (max-width: 991px) {
+        .nav-link {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">FreshBasket</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <i class="fas fa-user me-2"></i>{{ user.first_name }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'checkout' %}">
+                        <p>Checkout</p>
+                    </a>
+                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            <i class="fas fa-user login-icon"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">
+                            <i class="fas fa-user-plus signup-icon"></i> Signup
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

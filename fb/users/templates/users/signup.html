@@ -1,0 +1,34 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static '/users/css/form_style.css' %}">
+<div class="card">
+    <h2>Signup</h2>
+    <div>
+      {% if message %}
+      <p>{{message}}</p>
+      {% endif %}
+    </div>
+    <form action="{% url 'signup' %}" method="post">
+      {% csrf_token %}
+      <div>
+        <input type="text" placeholder="Mobile number" name="mobile">
+      </div>
+      <div>
+        <input type="text" placeholder="first name" name="first_name">
+      </div>
+      <div>
+        <input type="text" placeholder="last name" name="last_name">
+      </div>
+      <div>
+        <input type="password" placeholder="password" name="password">
+      </div>
+      <div>
+        <a href="{% url 'login' %}"><p>Already a user? Login here!</p></a>
+      </div>
+      <div>
+        <input type="submit" value="signup">
+      </div>
+    </form>
+  </div>
+{% endblock content %}
