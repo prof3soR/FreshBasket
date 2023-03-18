@@ -1,0 +1,236 @@
+{% extends 'users/base.html' %}
+{% load mathfilters %}
+
+{% block content %}
+<style>
+    .menu {
+      margin: 20px 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 0 auto;
+      width: 80%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 16px;
+      color: #333;
+      background-color: #fff;
+      border: 2px solid #000;
+    }
+
+    th, td {
+      text-align: center;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #FFD600;
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    tr:hover {
+      background-color: #000000;
+      color: #FFD600;
+    }
+    .container{
+        text-align: center;
+
+    }
+</style>
+<div class="container">
+<h1>Order Review</h1>
+
+  <div class="menu">
+    {% if m_items %}
+      <h2>Monday</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Item quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in m_items %}
+            <tr>
+              <td>{{item.name}}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.price | floatformat:2}}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="2">Total price : </td>
+            <td>{{m_price | floatformat:2}}</td>
+          </tr>
+        </tbody>
+      </table>
+    {% else %}
+      <p>No items selected for Monday</p>
+    {% endif %}
+    </div>
+
+    <div class="menu">
+        {% if t_items %}
+          <h2>Tuesday</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Item quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in t_items %}
+                <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.price | floatformat:2}}</td>
+                </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="2">Total price : </td>
+                <td>{{t_price | floatformat:2}}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% else %}
+          <p>No items selected for Tuesday</p>
+        {% endif %}
+      </div>
+
+      <div class="menu">
+        {% if w_items %}
+          <h2>Wednesday</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Item quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in w_items %}
+                <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.price | floatformat:2}}</td>
+                </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="2">Total price : </td>
+                <td>{{w_price | floatformat:2}}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% else %}
+          <p>No items selected for Wednesday</p>
+        {% endif %}
+      </div>
+
+      <div class="menu">
+        {% if th_items %}
+          <h2>Thursday</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Item quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in th_items %}
+                <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.price | floatformat:2}}</td>
+                </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="2">Total price : </td>
+                <td>{{th_price | floatformat:2}}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% else %}
+          <p>No items selected for thursday</p>
+        {% endif %}
+      </div>
+
+      <div class="menu">
+        {% if f_items %}
+          <h2>Friday</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Item quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in f_items %}
+                <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.price | floatformat:2}}</td>
+                </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="2">Total price : </td>
+                <td>{{f_price | floatformat:2}}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% else %}
+          <p>No items selected for friday</p>
+        {% endif %}
+      </div>
+
+      <div class="menu">
+        {% if s_items %}
+          <h2>Saturday</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Item quantity</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in s_items %}
+                <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.price | floatformat:2}}</td>
+                </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="2">Total price : </td>
+                <td>{{s_price | floatformat:2}}</td>
+              </tr>
+            </tbody>
+          </table>
+        {% else %}
+          <p>No items selected for saturday</p>
+        {% endif %}
+      </div>
+
+<h1>Total price to be paid : {{tot_price}}</h1>
+<form method="post" action="{% url "payment" %}">
+    {% csrf_token %}
+    <input type="number" value="{{total_price}}" name="amount" hidden>
+    <input type="submit" value="pay now">
+  </form>
+
+</div>
+{% endblock %}

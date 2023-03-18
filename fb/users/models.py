@@ -35,3 +35,14 @@ class BagItem(models.Model):
 
     def __str__(self):
         return f"{self.menu_item.name} ({self.quantity}) in {self.bag.user.first_name}'s Bag"
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    day = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
+    quantity = models.CharField(max_length=50)
+    price=models.FloatField()
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.day} {self.name} {self.quantity} {self.price}"

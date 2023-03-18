@@ -91,8 +91,9 @@
       <tr draggable="true" ondragstart="event.dataTransfer.setData('text/plain', this.outerHTML)"> 
           <td>{{ bag_item.menu_item.name }}</td>
           <td><img src="{{ bag_item.menu_item.image.url }}" alt="{{ bag_item.menu_item.name }}" width="100px" height="100px"></td>
-          <td>{{ bag_item.quantity }}</td>
+          <td>{{ bag_item.quantity }} {{bag_item.menu_item.quantity_type}}</td>
           <td>₹{{ bag_item.menu_item.price|floatformat:2|mul:bag_item.quantity }}</td>
+          <td><button class="remove-btn" onclick="removeRow(this)" >X</button></td>
       </tr>
   {% endfor %}
     </tbody>
@@ -107,6 +108,7 @@
                   <th>Item Image</th>
                   <th>Quantity</th>
                   <th>price</th>
+                  <th></th>
               </tr>
           </thead>
           <tbody>
@@ -191,11 +193,113 @@
       </table>
   </div>
 </div>
+
+<button id="save-btn">Save</button>
 <script>
+function removeRow(button) {
+  var row = button.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+}
+
+
+ // create an array for each container
+// create an array for each container
+// create an array for each container
+var mondayItems = [];
+  var tuesdayItems = [];
+  var wednesdayItems = [];
+  var thursdayItems = [];
+  var fridayItems = [];
+  var saturdayItems = [];
+
   function handleDrop(event, container) {
-      event.preventDefault();
-      var tableRow = event.dataTransfer.getData('text/plain');
-      container.querySelector('table tbody').insertAdjacentHTML('beforeend', tableRow);
+    event.preventDefault();
+    var tableRow = event.dataTransfer.getData('text/plain');
+    container.querySelector('table tbody').insertAdjacentHTML('beforeend', tableRow);
+
+    // extract the item name and quantity from the dropped row
+    var itemName = tableRow.match(/<td>(.*?)<\/td>/)[1];
+    var itemQuantity = tableRow.match(/<td>(.*?)<\/td>/g)[3];
+    var price = tableRow.match(/<td>(.*?)<\/td>/g)[4];
+
+    // add the item object to the respective array
+    switch (container.id) {
+      case "monday":
+        mondayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+        break;
+      case "tuesday":
+        tuesdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+        break;
+      case "wednesday":
+        wednesdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+        break;
+      case "thursday":
+        thursdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+        break;
+      case "friday":
+        fridayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+        break;
+      case "saturday":
+        saturdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+        break;
+    }
   }
+
+  document.getElementById("save-btn").addEventListener("click", function () {
+    // reset the arrays
+    mondayItems = [];
+    tuesdayItems = [];
+    wednesdayItems = [];
+    thursdayItems = [];
+    fridayItems = [];
+    saturdayItems = [];
+
+    // add all items in the containers to the arrays
+    document.querySelectorAll(".container table tbody tr").forEach(function (row) {
+  var itemName = row.querySelector("td:nth-child(1)").textContent.trim();
+  var itemQuantity = row.querySelector("td:nth-child(3)").textContent.trim();
+  var price = row.querySelector("td:nth-child(4)").textContent.trim();
+
+      switch (row.closest(".container").id) {
+        case "monday":
+          mondayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+          break;
+        case "tuesday":
+          tuesdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+          break;
+        case "wednesday":
+          wednesdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+          break;
+        case "thursday":
+          thursdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+          break;
+        case "friday":
+          fridayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+          break;
+        case "saturday":
+          saturdayItems.push({ name: itemName, quantity: itemQuantity, price: price });
+          break;
+      }
+    });
+  // send the data to the server using an AJAX request
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText); // do something with the response
+    }
+  };
+  xhttp.open("POST", "{% url 'save_items' %}", true);
+
+  // send the data of each array to their respective Django view
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("monday_items=" + JSON.stringify(mondayItems) +
+             "&tuesday_items=" + JSON.stringify(tuesdayItems) +
+             "&wednesday_items=" + JSON.stringify(wednesdayItems) +
+             "&thursday_items=" + JSON.stringify(thursdayItems) +
+             "&friday_items=" + JSON.stringify(fridayItems) +
+             "&saturday_items=" + JSON.stringify(saturdayItems));
+});
+
+
 </script>
 {% endblock %}

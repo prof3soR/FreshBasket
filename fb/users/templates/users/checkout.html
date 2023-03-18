@@ -68,7 +68,7 @@
             <td><img src="{{ bag_item.menu_item.image.url }}" alt="{{ bag_item.menu_item.name }}" width="100px" height="100px"></td>
             <td>{{ bag_item.quantity }}</td>
             <td>₹{{ bag_item.menu_item.price }}</td>
-            <td>₹{{ bag_item.quantity|mul:bag_item.menu_item.price }}</td>
+            <td>₹{{ bag_item.menu_item.price|floatformat:2|mul:bag_item.quantity }}</td>
             <td>
                 <select >
                     <option value="none" selected disabled hidden>Delivary Day</option>
