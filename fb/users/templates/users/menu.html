@@ -4,71 +4,67 @@
 {% block content %}
 <link rel="stylesheet" href="{% static '/users/css/menu_style.css' %}">
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <div class="row mb-4">
-        <div class="col">
-          <h2 class="text-center mb-0">Menu</h2>
+  <div class="row">
+    <div class="filter">
+      <h4 class="filter__heading">Filter by category:</h4>
+      <ul class="filter__list">
+        <li class="filter__item {% if not category %}active{% endif %}">
+          <a href="{% url 'menu' %}" class="filter__link">All</a>
+        </li>
+        {% for c in categories %}
+          <li class="filter__item {% if category == c.name %}active{% endif %}">
+            <a href="?category={{ c.name }}" class="filter__link">{{ c.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      <form method="get" action="{% url 'menu' %}" class="filter__form">
+        <div class="input-group">
+          <input type="text" name="query"  class="form-control filter__search-input" placeholder="Search item...">
+          <div class="input-group-append">
+            <span class="input-group-text filter__search-icon"><i class="fa fa-search"></i></span>
+          </div>
         </div>
-      </div>
-      <div class="row justify-content-between align-items-center mb-4">
-        <div class="col-md-6 col-lg-4 mb-3 mb-md-0">
-          <form method="get" action="{% url 'menu' %}">
+      </form>
+      
+      <a href="{% url "bag" %}" >Checkout Bag</a>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    {% for item in items %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card {% if item.available == 0 %}out-of-stock{% endif %}">
+        <div class="d-flex align-items-center justify-content-center" style="height: 10rem; position: relative;">
+          {% if item.image %}
+          <img src="{{ item.image.url }}"  alt="{{ item.name }}" style="width: 5rem; height: 4rem; object-fit: cover;">
+          {% endif %}
+          <div class="ml-3">
+            <h5 class="card-title" style="font-size: 1.3rem; font-family: 'Pacifico', cursive;">{{ item.name }}</h5>
+            <p class="card-text" style="font-size: 0.8rem; font-family: 'Montserrat', sans-serif;">
+              Making time: {{ item.description }}<br>
+              Rating: {{ item.rating }}<br>
+            </p>
+            <div class="price-container">
+              <p class="price">₹{{ item.price }}</p>
+            </div>
+          </div>
+          <form method="POST" action="{% url 'add_to_bag' %}">
+            {% csrf_token %}
             <div class="input-group">
-              <input type="text" name="query" value="{{ query }}" class="form-control" placeholder="Search item...">
+              <input type="number" name="quantity" min="1" max="10" class="form-control" placeholder="{{item.quantity_type}}">
+              <input type="hidden" name="item_id" value="{{ item.name }}">
               <div class="input-group-append">
-                <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
+                <button class="btn btn-dark" type="submit">Add to Bag</button>
               </div>
             </div>
           </form>
         </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="categoryFilter" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {% if category %}
-                {{ category }}
-              {% else %}
-                All
-              {% endif %}
-            </button>
-            <div class="dropdown-menu" aria-labelledby="categoryFilter">
-              <a class="dropdown-item" href="{% url 'menu' %}">All</a>
-              {% for c in categories %}
-              <a class="dropdown-item" href="?category={{ c.name }}">{{ c.name }}</a>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        {% for item in items %}
-        <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card border-0">
-            <img class="card-img-top" src="{{ item.image.url }}" alt="{{ item.name }}">
-            <div class="card-body text-center p-3">
-              <h5 class="card-title mb-2">{{ item.name }}</h5>
-              <p class="card-text">{{ item.description }}</p>
-              <p class="card-text"><strong>₹{{ item.price }}</strong></p>
-              <form method="POST" action="{% url 'add_to_bag' %}">
-                {% csrf_token %}
-                <div class="input-group">
-                  <input type="number" name="quantity" value="1" min="1" max="99" class="form-control" placeholder="Qty">
-                  <input type="hidden" name="item_id" value="{{ item.id }}">
-                  <div class="input-group-append">
-                    <button class="btn btn-dark" type="submit">Add to Bag</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        {% empty %}
-        <div class="col">
-          <p>No menu items yet.</p>
-        </div>
-        {% endfor %}
       </div>
     </div>
+    {% empty %}
+    <div class="col">
+      <p>No menu items yet.</p>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock content %}

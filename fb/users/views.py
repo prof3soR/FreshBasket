@@ -124,7 +124,6 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Order
-import re
 import json
 
 @csrf_exempt
@@ -143,7 +142,6 @@ def save_items(request):
         saturday_items = request.POST.get('saturday_items')
         saturday_items = json.loads(saturday_items)
         user = request.user
-        print(monday_items,tuesday_items)
         # Save the items for each day
         for item in monday_items:
             name = item['name']
@@ -181,12 +179,11 @@ def save_items(request):
             price=float(item['price'].replace('<td>', '').replace('</td>', '').replace('₹',''))
             order = Order(user=user, day='Saturday', name=name, quantity=quantity,price=price)
             order.save()
-        
+        messages.add_message(request, messages.INFO, 'Items are successfully saved in respective baskets!')
         # Send a success response
-        return HttpResponseRedirect(reverse('review_order'))
-    
-    # Send an error response if the request is not POST
-    return JsonResponse({'status': 'error'})
+        return render(request,"users/review_order.html")
+
+
 
 
 from django.db.models import Sum
@@ -249,7 +246,8 @@ def review_order(request):
         "th_price":th_price,
         "f_price":f_price,
         "s_price":s_price,
-        "tot_price":tot_price
+        "tot_price":tot_price,
+        "amount":tot_price*100,
     }
     return render(request,"users/review_order.html",context)
 
@@ -264,7 +262,7 @@ def payment(request):
         amount = float(request.POST['amount']) * 100  # convert to paise
         client = razorpay.Client(auth=("rzp_test_FOQ1egNAlDEuhn","C7oxJQA4vaAvpKnTerprMvvA"))
         payment_data = {
-            'amount': amount,
+            'amount': int(amount),
             'currency': 'INR',
             'payment_capture': 1
         }
@@ -274,5 +272,5 @@ def payment(request):
             'razorpay_key_id': "rzp_test_FOQ1egNAlDEuhn",
             'amount': amount
         }
-        return JsonResponse(context)
+        
     return render(request, 'users/payment.html')
