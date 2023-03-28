@@ -1,31 +1,67 @@
 {% extends "users/base.html" %}
 {% load static %}
+
 {% block content %}
-<link rel="stylesheet" href="{% static '/users/css/form_style.css' %}">
-<div class="card">
-    <h2>Login</h2>
-    <div>
-      {% if message %}
-      <p>{{message}}</p>
-      {% endif %}
+  <link rel="stylesheet" href="{% static '/users/css/form_style.css' %}">
+
+<div class="container">
+  <div class="card-content">
+    <div class="card-image">
+      <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" height="100px" width="100px" alt="Login Image">
     </div>
-    <form action="{% url 'login' %}" method="post">
-      {% csrf_token %}
-      <div>
-        <input type="text" placeholder="Mobile number" name="mobile">
-      </div>
-      <div>
-        <input type="password" placeholder="password" name="password">
-      </div>
-      <div>
-        <a href="{% url 'signup' %}"><p>New user? Create you account here!</p></a>
-      </div>
-      <div>
-        <input type="submit" value="Login">
-      </div>
-    </form>
+    <div class="form-container">
+      <h2>Login</h2>
+      <form action="{% url 'login' %}" method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div>
+          <label for="mobile">Mobile Number</label>
+          <input type="text" placeholder="+91" name="mobile" id="mobile">
+          <div id="mobile-error" class="input-error"></div>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" placeholder="Password" name="password" id="password">
+          <div id="password-error" class="input-error"></div>
+        </div>
+        <div>
+          <a href="{% url 'signup' %}">New user? Create you account here!</a>
+        </div>
+        <div>
+          <input type="submit" value="Login">
+        </div>
+      </form>
+    </div>
   </div>
+</div>
 
+<script>
+  function validateForm() {
+    var mobileField = document.getElementById("mobile");
+    var mobileError = document.getElementById("mobile-error");
+    var passwordField = document.getElementById("password");
+    var passwordError = document.getElementById("password-error");
 
+  
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
-{% endblock content %}
+    mobileError.innerHTML = "";
+    passwordError.innerHTML = "";
+    mobileField.classList.remove("input-invalid");
+    passwordField.classList.remove("input-invalid");
+
+    if (!mobileRegex.test(mobileField.value)) {
+      mobileError.innerHTML = "Please enter a valid +91 mobile number";
+      mobileField.classList.add("input-invalid");
+      return false;
+    }
+
+    if (!passwordRegex.test(passwordField.value)) {
+      passwordError.innerHTML = "Please enter a valid password (must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 6 characters long)";
+      passwordField.classList.add("input-invalid");
+      return false;
+    }
+
+    return true;
+  }
+</script>
+{% endblock %}  

@@ -1,65 +1,81 @@
-body {
-    background-color: #fff;
-    font-family: Arial, sans-serif;
-  }
-  
-  .card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin: 50px auto;
-    max-width: 400px;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .card h2 {
-    color: #222;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .card input[type="text"],
-  .card input[type="password"] {
-    background-color: #f9f9f9;
-    border: none;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: #222;
-    font-size: 16px;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
-  }
-  
-  .card input[type="submit"] {
-    background-color: #fec31a;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    padding: 10px;
-    width: 100%;
-  }
-  
-  .card input[type="submit"]:hover {
-    background-color: #ffce1a;
-  }
-  
-  .card p {
-    color: #222;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  .card form {
-    margin-top: 20px;
-  }
-  
-  .card form div {
-    margin-bottom: 20px;
-  }
-  
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.card-image img {
+  border-radius: 50%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.input-error {
+  font-size: 14px;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.input-invalid {
+  border-color: red;
+}
+
+a {
+  color: #555;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+input[type="submit"] {
+  background-color: #555;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover {
+  background-color: #333;
+}
