@@ -1,0 +1,56 @@
+{% extends "users/base.html" %}
+{% block content %}
+<style>
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin-left: 5%;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border: 1px solid #ddd;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      
+    }
+    
+    th {
+      background-color: #fec11a;
+      color: #000000;
+      font-size: 22px;
+    }
+    h1{
+        text-align: center;
+        margin: 12px;
+    }
+  </style>
+  
+  <body>
+    <h1>Today's Deliveries</h1>
+    
+    <table>
+      <tr>
+        <th>User</th>
+
+        <th>Items</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+      {% for order in orders %}
+      <tr>
+        <td>{{ order.user.first_name }}</td>
+        
+        <td>{{ order.name }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.price }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">No orders to deliver today.</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+
+{% endblock %}

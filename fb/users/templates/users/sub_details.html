@@ -1,0 +1,128 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<style>
+/* Set the default font and background color */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #eec146c1;
+}
+
+/* Center the content vertically and horizontally */
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Set the styles for the payment page content */
+.payment-page {
+  background-color: #fec11ac1;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 50px;
+  width: 500px;
+  position: absolute;
+  margin-left: 32%;
+}
+
+.payment-page h1 {
+  margin-top: 0;
+  font-size: 30px;
+}
+
+.payment-page h3 {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.payment-page h5 {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.payment-page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.payment-page th, .payment-page td {
+  padding: 10px;
+  text-align: left;
+}
+
+.payment-page th {
+  border-bottom: 1px solid #000;
+  font-size: 16px;
+}
+
+.payment-page td {
+  font-size: 14px;
+}
+
+.payment-page button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.payment-page button:hover {
+  background-color: #000000;
+}
+
+.payment-page input {
+  display: none;
+}
+h1{
+margin-top: 10%;
+}
+</style>
+<center><h1>Welcome {{user.first_name}}</h1></center>
+<div class="payment-page">
+<h1>Next Order Details</h1>
+
+<h5>
+    Your next delivary is on : {{date}} {{day}}
+</h5>
+<div class="menu">
+    {% if items %}
+        <h2>{{day}}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price | floatformat:2 }}</td>
+                    </tr>
+                
+            </tbody>
+        </table>
+        {% endfor %}
+        {% endif %}
+        
+        <form method="post" action="{% url "cancle_order" %}">
+            {% csrf_token %}
+            <input type="text" value="{{date}}" name="date" hidden>
+            <input type="text" value="{{day}}" name="day" hidden>
+            <button value="submit">Cancle this order</button>
+        </form>
+        
+        </div>
+    </div>
+{% endblock %}

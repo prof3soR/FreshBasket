@@ -26,7 +26,10 @@
         </div>
       </form>
       
-      <a href="{% url "bag" %}" >Checkout Bag</a>
+     <a href="{% url 'bag' %}">
+  <i class="fa fa-shopping-bag"></i>
+</a>
+
     </div>
   </div>
   <div class="row justify-content-center">
@@ -40,7 +43,7 @@
           <div class="ml-3">
             <h5 class="card-title" style="font-size: 1.3rem; font-family: 'Pacifico', cursive;">{{ item.name }}</h5>
             <p class="card-text" style="font-size: 0.8rem; font-family: 'Montserrat', sans-serif;">
-              Making time: {{ item.description }}<br>
+              Description: {{ item.description }}<br>
               Rating: {{ item.rating }}<br>
             </p>
             <div class="price-container">
@@ -50,7 +53,7 @@
           <form method="POST" action="{% url 'add_to_bag' %}">
             {% csrf_token %}
             <div class="input-group">
-              <input type="number" name="quantity" min="1" max="10" class="form-control" placeholder="{{item.quantity_type}}">
+              <input type="number" name="quantity" min="0" max="10" class="form-control" placeholder="{{item.quantity_type}}" >
               <input type="hidden" name="item_id" value="{{ item.name }}">
               <div class="input-group-append">
                 <button class="btn btn-dark" type="submit">Add to Bag</button>

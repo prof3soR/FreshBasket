@@ -10,7 +10,7 @@ from django.contrib import messages
 # Create your views here.
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
+        return render(request,"users/index.html")
     else:
         return render(request,"users/index.html")
     
@@ -23,15 +23,20 @@ def login_view(request):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            messages.add_message(request, messages.SUCCESS, 'Login successfull!')
-            return HttpResponseRedirect(reverse('menu'))
+            sub_details=subscription_details.objects.filter(user=user).first()
+            if sub_details is None:
+                messages.add_message(request, messages.SUCCESS, 'Login successfull!')
+                return HttpResponseRedirect(reverse('menu'))
+            else:
+                messages.add_message(request, messages.SUCCESS, 'Login successfull!')
+                return HttpResponseRedirect("sub_details")
         else:
             messages.add_message(request, messages.ERROR, 'Invalid Credentials!')
             return render(request,"users/login.html",)
     else:
-        return render(request,"users/login.html",)
+        return render(request,"users/login.html")
         
-
+    
 def logout_view(request):
     logout(request)
     messages.add_message(request, messages.INFO, 'Logged out!')
@@ -57,8 +62,41 @@ def signup(request):
         return HttpResponseRedirect(reverse('login'))
     else:
         return render(request, 'users/signup.html')
+    
+import datetime
+
+def check_date(input_date):
+    # get today's date
+    today = datetime.date.today()
+
+    # convert input date to a datetime.date object
+    input_date = datetime.datetime.strptime(str(input_date), '%Y-%m-%d').date()
+
+    # calculate the number of days between input date and today's date
+    days_diff = (input_date - today).days
+
+    # compare input date with today's date
+    if days_diff >= 0:
+        # if input date is greater than or equal to today's date, return input date
+        result_date = input_date
+    else:
+        # if input date is less than today's date, return today's date + 1 day
+        result_date = today + datetime.timedelta(days=1)
+
+    # get the weekday of the input or next day
+    weekday = result_date.strftime('%A')
 
 
+    return result_date, weekday
+
+def sub_details(request):
+    user=request.user
+    sub_details=subscription_details.objects.get(user=user)
+    date,day=check_date(sub_details.from_date)
+    items_details=Order.objects.filter(user=user,day=day)
+    return render(request,"users/sub_details.html",{"sub_details":sub_details,
+                                                    "date":date,"day":day,
+                                                    "items":items_details})
 @login_required
 def menu(request):
     query = request.GET.get('query')
@@ -101,7 +139,7 @@ def add_to_bag(request):
             bag_item.save()
         messages.add_message(request, messages.INFO, 'Item added to bag!')
         return redirect("menu")
-    
+
 from decimal import Decimal
 
 def checkout(request):
@@ -180,18 +218,14 @@ def save_items(request):
             order = Order(user=user, day='Saturday', name=name, quantity=quantity,price=price)
             order.save()
         messages.add_message(request, messages.INFO, 'Items are successfully saved in respective baskets!')
-        # Send a success response
-        return render(request,"users/review_order.html")
+        return redirect("review_order")
 
 
-
-
-from django.db.models import Sum
-from django.template import context_processors
 
 def review_order(request):
     user = request.user
     orders = Order.objects.filter(user=user)
+    address_list=delivary_address.objects.filter(user=user)
     m_items=[]
     t_items=[]
     w_items=[]
@@ -229,7 +263,7 @@ def review_order(request):
             s_price+=float(price)
 
     tot_price=m_price+t_price+w_price+th_price+f_price+s_price
-        
+    
         
 
     
@@ -248,6 +282,8 @@ def review_order(request):
         "s_price":s_price,
         "tot_price":tot_price,
         "amount":tot_price*100,
+        "payment":False,
+        "address_list":address_list,
     }
     return render(request,"users/review_order.html",context)
 
@@ -273,4 +309,78 @@ def payment(request):
             'amount': amount
         }
         
-    return render(request, 'users/payment.html')
+    return render(request, 'users/review_order.html')
+
+def save_subscrition(request):
+    if request.method=="POST":
+        user=request.user
+        address_id=request.POST.get("address_id")
+        address=delivary_address.objects.get(pk=address_id)
+        from_date=request.POST.get("from_date")
+        to_date=request.POST.get("to_date")
+        amount=request.POST.get("amount")
+        new_sub=subscription_details(user=user,
+                                     address=address,
+                                     from_date=from_date,
+                                     to_date=to_date,
+                                     amount=float(amount))
+        new_sub.save()
+        return redirect("payment")
+def payment(request):
+    user=request.user
+    subscription=subscription_details.objects.get(user=user)
+    price=subscription.amount//100
+    return render(request,"users/payment.html",{"subs":subscription,"price":price})
+
+
+def pricing(request):
+    return render(request,"users/pricing.html")
+
+def add_delivery_address(request):
+    if request.method == 'POST':
+        user = request.user
+        door_no = request.POST.get('door_no')
+        appartment_street = request.POST.get('appartment_street')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        pincode = request.POST.get('pincode')
+        default_address = request.POST.get('default_address')
+        
+        # Convert default_address string to boolean
+        default_address = True if default_address == 'on' else False
+        
+        # Set all other addresses to non-default if this address is the default
+        if default_address:
+            delivary_address.objects.filter(user=user).update(defult_address=False)
+        
+        # Save the new delivery address
+        new_address = delivary_address(user=user, Door_no=door_no, appartment_street=appartment_street, city=city, state=state, pincode=pincode, defult_address=default_address)
+        new_address.save()
+        
+        return redirect('review_order')  # Redirect to a success page
+    else:
+        return render(request, 'users/address.html')
+    
+def cancle_order(request):
+    if request.method=="POST":
+        day=request.POST.get("day")
+        date=request.POST.get("date")
+        user=request.user
+        if cancelled_orders.objects.filter(user=user,day=day,date=date).exists():
+            messages.add_message(request, messages.ERROR, 'Order already cancelled!!')
+            return redirect("sub_details")
+        else:
+            new_cancle_order=cancelled_orders(user=user,day=day,date=date)
+            new_cancle_order.save()
+            messages.add_message(request, messages.ERROR, 'Order successfully cancelled!!')
+            return redirect("sub_details")
+    else:
+        orders_list=cancelled_orders.objects.all()
+        return render(request,"users/can_orders.html",{"orders":orders_list})
+    
+
+def todays_deliveries(request):
+    today = datetime.date.today()
+    weekday = today.strftime('%A')
+    orders = Order.objects.filter(day=weekday)
+    return render(request, 'users/todays_deliveries.html', {'orders': orders})

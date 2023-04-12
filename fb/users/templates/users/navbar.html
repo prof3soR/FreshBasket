@@ -5,7 +5,7 @@
     
     .navbar-brand {
         font-family: 'Montserrat', sans-serif;
-        font-size: 1.5rem;
+        font-size: 2rem;
         color: #FEC31A;
         letter-spacing: 2px;
     }
@@ -16,7 +16,7 @@
     
     .nav-link {
         font-family: 'Montserrat', sans-serif;
-        font-size: 0.8rem;
+        font-size: 1.2rem;
         color: #fff;
         text-transform: uppercase;
         text-align: center;
@@ -27,13 +27,13 @@
     }
     
     .login-icon {
-        font-size: 0.6rem;
+        font-size: 1.5rem;
         color: #FEC31A;
         margin-right: 0.5rem;
     }
     
     .signup-icon {
-        font-size: 0.6rem;
+        font-size: 1.5rem;
         color: #FEC31A;
         margin-right: 0.5rem;
     }
@@ -58,13 +58,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{% url "index" %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="{% url "menu" %}">menu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link" href="{% url "pricing" %}">Pricing</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

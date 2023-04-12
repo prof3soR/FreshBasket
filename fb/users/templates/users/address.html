@@ -1,0 +1,81 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<style>
+body{
+    align-items: center;
+    height: 100vh;
+    background-color: #fec11ac1;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    margin-left: 30%;
+}
+
+form label[for="door_no"],
+form label[for="appartment_street"],
+form label[for="pincode"],
+form label[for="state"], 
+form label[for="city"]{
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+form input[type="text"] {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #fec11ac1;
+}
+
+</style>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    
+    <label for="door_no">Door Number:</label>
+    <input type="text" id="door_no" name="door_no"><br><br>
+    
+    <label for="appartment_street">Apartment/Street:</label>
+    <input type="text" id="appartment_street" name="appartment_street"><br><br>
+    
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city"><br><br>
+    
+    <label for="state">State:</label>
+    <input type="text" id="state" name="state"><br><br>
+    
+    <label for="pincode">Pincode:</label>
+    <input type="text" id="pincode" name="pincode"><br><br>
+    
+    <label for="default_address">Default Address:</label>
+    <input type="checkbox" id="default_address" name="default_address"><br><br>
+    
+    <input type="submit" value="Add address">
+</form>
+{% endblock %}

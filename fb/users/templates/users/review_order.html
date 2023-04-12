@@ -4,309 +4,414 @@
 {% block content %}
 
 <style>
-  .form-card {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    width: 70%;
-    margin-right: 10px;
-    float: left;
-  }
+  .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+}
 
-  /* Style for the form input fields */
-  input[type=text], select {
+.left {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.right {
+  display: flex;
+  flex: 0 0 400px;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  margin: 20px;
+}
+
+.right h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.right input[type=text], 
+.right input[type=mobile], 
+.right input[type=number], 
+.right input[type=email], 
+.right input[type=password], 
+.right input[type=checkbox], 
+.right textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.right input[type=submit] {
+  background-color: #f5c518;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.right input[type=submit]:hover {
+  background-color: #e6b917;
+}
+
+.right label {
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.right input[type=checkbox] {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.right input[type=checkbox]:hover {
+  cursor: pointer;
+}
+
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.menu {
+  margin-bottom: 40px;
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th {
+  padding: 10px;
+  border: 1px solid #000000;
+  color: white;
+}
+td {
+  padding: 10px;
+  border: 1px solid #000000;
+  
+
+}
+
+th {
+  background-color: #000000;
+}
+
+td:nth-child(3) {
+  text-align: right;
+}
+
+td:last-child {
+  font-weight: bold;
+}
+
+p {
+  margin: 0;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+form {
+  margin-top: 40px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="submit"],
+input[type="select"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input[type="submit"] {
+  background-color: #000000;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.rzp-button1{
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-
-  /* Style for the form submit button */
-  input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-  }
-
-  input[type=submit]:hover {
-    background-color: #45a049;
-  }
-
-  /* Style for the form label */
-  label {
-    font-weight: bold;
-  }
-
-  .menu {
+    padding:10px;
+    font-size: 2rem;
+}
+input[type="submit"]:hover {
+  background-color: #e6b917;
+}
+.delivery-addresses {
     margin: 20px 0;
-  }
+}
 
-  table {
-    border-collapse: collapse;
-    margin: 0 auto;
-    width: 50%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.delivery-addresses h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.delivery-addresses select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
     font-size: 16px;
-    color: #333;
-    background-color: #fff;
-    border: 2px solid #000;
-    float: left;
-  }
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
 
-  th, td {
-    text-align: center;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
+.default-address label {
+    font-size: 16px;
+    display: block;
+    margin-top: 10px;
+}
 
-  th {
-    background-color: #FFD600;
-    color: #000;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  tr:hover {
-    background-color: #000000;
-    color: #FFD600;
-  }
-
-  .container{
-    text-align: center;
-    overflow: auto;
-  }
-
-
+.default-address input[type="radio"] {
+    margin-right: 10px;
+}
+body{
+  background-color: #fec11ac1;
+}
+h1{
+  margin: 10px;
+}
+a{
+  color: black;
+}
 </style>
 <div class="container">
-<h1>Order Review</h1>
-
-  <div class="menu">
-    {% if m_items %}
-      <h2>Monday</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Item Name</th>
-            <th>Item quantity</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in m_items %}
-            <tr>
-              <td>{{item.name}}</td>
-              <td>{{item.quantity}}</td>
-              <td>{{item.price | floatformat:2}}</td>
-            </tr>
-          {% endfor %}
-          <tr>
-            <td colspan="2">Total price : </td>
-            <td>{{m_price | floatformat:2}}</td>
-          </tr>
-        </tbody>
-      </table>
-    {% else %}
-      <p>No items selected for Monday</p>
-    {% endif %}
-    </div>
-
-    <div class="menu">
+  <div class="left">
+      <center><h1>Order Review</h1></center>
+      <div class="menu">
+          {% if m_items %}
+              <h2>Monday</h2>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Item Name</th>
+                          <th>Item quantity</th>
+                          <th>Price</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for item in m_items %}
+                          <tr>
+                              <td>{{ item.name }}</td>
+                              <td>{{ item.quantity }}</td>
+                              <td>{{ item.price | floatformat:2 }}</td>
+                          </tr>
+                      {% endfor %}
+                      <tr>
+                          <td colspan="2">Total price :</td>
+                          <td>{{ m_price | floatformat:2 }}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          {% endif %}
+          <!-- Repeat the above block for t_items, w_items, th_items, f_items, and s_items -->
+      </div>
+      <div class="menu">
         {% if t_items %}
-          <h2>Tuesday</h2>
+            <h2>Tuesday</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in t_items %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.price | floatformat:2 }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="2">Total price :</td>
+                        <td>{{ t_price | floatformat:2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+        <!-- Repeat the above block for t_items, w_items, th_items, f_items, and s_items -->
+    </div>
+    <div class="menu">
+      {% if w_items %}
+          <h2>Wednsday</h2>
           <table>
+              <thead>
+                  <tr>
+                      <th>Item Name</th>
+                      <th>Item quantity</th>
+                      <th>Price</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for item in w_items %}
+                      <tr>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.quantity }}</td>
+                          <td>{{ item.price | floatformat:2 }}</td>
+                      </tr>
+                  {% endfor %}
+                  <tr>
+                      <td colspan="2">Total price :</td>
+                      <td>{{ w_price | floatformat:2 }}</td>
+                  </tr>
+              </tbody>
+          </table>
+      {% endif %}
+      <!-- Repeat the above block for t_items, w_items, th_items, f_items, and s_items -->
+  </div>
+  <div class="menu">
+    {% if th_items %}
+        <h2>Thrusday</h2>
+        <table>
             <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Item quantity</th>
-                <th>Price</th>
-              </tr>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item quantity</th>
+                    <th>Price</th>
+                </tr>
             </thead>
             <tbody>
-              {% for item in t_items %}
+                {% for item in th_items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price | floatformat:2 }}</td>
+                    </tr>
+                {% endfor %}
                 <tr>
-                  <td>{{item.name}}</td>
-                  <td>{{item.quantity}}</td>
-                  <td>{{item.price | floatformat:2}}</td>
+                    <td colspan="2">Total price :</td>
+                    <td>{{ th_price | floatformat:2 }}</td>
                 </tr>
-              {% endfor %}
-              <tr>
-                <td colspan="2">Total price : </td>
-                <td>{{t_price | floatformat:2}}</td>
-              </tr>
             </tbody>
-          </table>
-        {% else %}
-          <p>No items selected for Tuesday</p>
-        {% endif %}
-      </div>
-
-      <div class="menu">
-        {% if w_items %}
-          <h2>Wednesday</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Item quantity</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in w_items %}
-                <tr>
-                  <td>{{item.name}}</td>
-                  <td>{{item.quantity}}</td>
-                  <td>{{item.price | floatformat:2}}</td>
-                </tr>
-              {% endfor %}
-              <tr>
-                <td colspan="2">Total price : </td>
-                <td>{{w_price | floatformat:2}}</td>
-              </tr>
-            </tbody>
-          </table>
-        {% else %}
-          <p>No items selected for Wednesday</p>
-        {% endif %}
-      </div>
-
-      <div class="menu">
-        {% if th_items %}
-          <h2>Thursday</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Item quantity</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in th_items %}
-                <tr>
-                  <td>{{item.name}}</td>
-                  <td>{{item.quantity}}</td>
-                  <td>{{item.price | floatformat:2}}</td>
-                </tr>
-              {% endfor %}
-              <tr>
-                <td colspan="2">Total price : </td>
-                <td>{{th_price | floatformat:2}}</td>
-              </tr>
-            </tbody>
-          </table>
-        {% else %}
-          <p>No items selected for thursday</p>
-        {% endif %}
-      </div>
-
-      <div class="menu">
-        {% if f_items %}
-          <h2>Friday</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Item quantity</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in f_items %}
-                <tr>
-                  <td>{{item.name}}</td>
-                  <td>{{item.quantity}}</td>
-                  <td>{{item.price | floatformat:2}}</td>
-                </tr>
-              {% endfor %}
-              <tr>
-                <td colspan="2">Total price : </td>
-                <td>{{f_price | floatformat:2}}</td>
-              </tr>
-            </tbody>
-          </table>
-        {% else %}
-          <p>No items selected for friday</p>
-        {% endif %}
-      </div>
-
-      <div class="menu">
-        {% if s_items %}
-          <h2>Saturday</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Item quantity</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in s_items %}
-                <tr>
-                  <td>{{item.name}}</td>
-                  <td>{{item.quantity}}</td>
-                  <td>{{item.price | floatformat:2}}</td>
-                </tr>
-              {% endfor %}
-              <tr>
-                <td colspan="2">Total price : </td>
-                <td>{{s_price | floatformat:2}}</td>
-              </tr>
-            </tbody>
-          </table>
-        {% else %}
-          <p>No items selected for saturday</p>
-        {% endif %}
-        <h1>Total price to be paid : {{tot_price}}</h1>
-      </div>
-
-
-
-
-  
-<button id="rzp-button1">Pay</button>
+        </table>
+    {% endif %}
+    <!-- Repeat the above block for t_items, w_items, th_items, f_items, and s_items -->
 </div>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-var options = {
-    "key": "rzp_test_FOQ1egNAlDEuhn", // Enter the Key ID generated from the Dashboard
-    "amount": "{{amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    "currency": "INR",
-    "name": "Acme Corp", //your business name
-    "description": "Test Transaction",
-    "image": "https://example.com/your_logo",
-    "order_id": "{{razorpay_order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
-    "prefill": {
-        "name": "Gaurav Kumar", //your customer's name
-        "email": "gaurav.kumar@example.com",
-        "contact": "9000090000"
-    },
-    "notes": {
-        "address": "Razorpay Corporate Office"
-    },
-    "theme": {
-        "color": "#3399cc"
-    }
-};
-var rzp1 = new Razorpay(options);
-document.getElementById('rzp-button1').onclick = function(e){
-    rzp1.open();
-    e.preventDefault();
-}
-</script>
+<div class="menu">
+  {% if f_items %}
+      <h2>Friday</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>Item Name</th>
+                  <th>Item quantity</th>
+                  <th>Price</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for item in f_items %}
+                  <tr>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.quantity }}</td>
+                      <td>{{ item.price | floatformat:2 }}</td>
+                  </tr>
+              {% endfor %}
+              <tr>
+                  <td colspan="2">Total price :</td>
+                  <td>{{ f_price | floatformat:2 }}</td>
+              </tr>
+          </tbody>
+      </table>
+  {% endif %}
+  <!-- Repeat the above block for t_items, w_items, th_items, f_items, and s_items -->
+</div>
+<div class="menu">
+  {% if s_items %}
+      <h2>Saturday</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>Item Name</th>
+                  <th>Item quantity</th>
+                  <th>Price</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for item in s_items %}
+                  <tr>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.quantity }}</td>
+                      <td>{{ item.price | floatformat:2 }}</td>
+                  </tr>
+              {% endfor %}
+              <tr>
+                  <td colspan="2">Total price :</td>
+                  <td>{{ s_price | floatformat:2 }}</td>
+              </tr>
+          </tbody>
+      </table>
+  {% endif %}
+  
+</div>
+  </div>
+  
+  <div>
+    <div class="delivery-addresses">
+      <h2>Subscription details</h2>
+      <h3>Delivery Addresses</h3>
+      
+
+  </div>
+  
+  <form method="post" action="{% url "save_subs" %}">
+    {% csrf_token %}
+    <select value="{{ address.pk }}" name="address_id">
+      {% for address in address_list %}
+      <option value="{{ address.pk }}" {% if address.defult_address %}selected{% endif %}>
+          {{ address.Door_no }} {{ address.appartment_street }}, {{ address.city }}, {{ address.state }}, {{ address.pincode }}
+      </option>
+      
+      {% endfor %}
+      
+
+  </select>
+  <a href="{% url "address" %}">Add new Delivery Address</a>
+    <label >Subscription start From</label>
+    <input type="date" name="from_date">
+    <label >Subscription Ends on</label>
+    <input type="date" name="to_date">
+    <input type="text" name="instructions" placeholder=" Add any other instructions">
+    <input type="number" value="{{amount}}" hidden name="amount">
+    <input type="submit" value="Subscribe">
+  </form>
+  </div>
+</div>
+
 
 
 {% endblock %}

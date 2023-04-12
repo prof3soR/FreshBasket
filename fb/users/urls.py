@@ -13,6 +13,13 @@ urlpatterns=[
     path('bag/', views.bag, name='bag'),
     path('save_items/', views.save_items, name='save_items'),
     path('review_order/',views.review_order,name="review_order"),
-    path('payment/',views.payment,name="payment")
-   
+    path('payment/',views.payment,name="payment"),
+    path("save_sub",views.save_subscrition,name="save_sub"),
+    path("sub_details",views.sub_details,name="sub_details"),
+    path("pricing",views.pricing,name="pricing"),
+    path("address",views.add_delivery_address,name="address"),
+    path("save_sub",views.save_subscrition,name="save_subs"),
+    path("payment",views.payment,name="payment"),
+    path("cancle_order",views.cancle_order,name="cancle_order"),
+    path("todays_deliveries",views.todays_deliveries,name="todays_deliveries")
 ]

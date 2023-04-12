@@ -1,34 +1,121 @@
 {% extends "users/base.html" %}
 {% load static %}
 {% block content %}
+<style>
+  .card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 600px;
+  background-color: #ffffff6c;
+  border: 1px solid #dbdbdb;
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+</style>
 <link rel="stylesheet" href="{% static '/users/css/form_style.css' %}">
-<div class="card">
+<div class="container">
+  <div class="card-content">
+    <h1> FreshBaskets</h1>
     <h2>Signup</h2>
     <div>
       {% if message %}
       <p>{{message}}</p>
       {% endif %}
     </div>
-    <form action="{% url 'signup' %}" method="post">
-      {% csrf_token %}
-      <div>
-        <input type="text" placeholder="Mobile number" name="mobile">
-      </div>
-      <div>
-        <input type="text" placeholder="first name" name="first_name">
-      </div>
-      <div>
-        <input type="text" placeholder="last name" name="last_name">
-      </div>
-      <div>
-        <input type="password" placeholder="password" name="password">
-      </div>
-      <div>
-        <a href="{% url 'login' %}"><p>Already a user? Login here!</p></a>
-      </div>
-      <div>
-        <input type="submit" value="signup">
-      </div>
-    </form>
+    <div class="form-container">
+      
+      <form action="{% url 'signup' %}" method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div>
+          <input type="text" placeholder="Mobile number" name="mobile" id="mobile">
+          <div id="mobile-error" class="input-error" style="color: red; font-size: 14px;"></div>
+        </div>
+        <div>
+          <input type="text" placeholder="First name" name="first_name" id="first_name">
+          <div id="first_name-error" class="input-error" style="color: red; font-size: 14px;"></div>
+        </div>
+        <div>
+          <input type="text" placeholder="Last name" name="last_name" id="last_name">
+          <div id="last_name-error" class="input-error" style="color: red; font-size: 14px;"></div>
+        </div>
+        <div>
+          <input type="password" placeholder="Password" name="password" id="password">
+          <div id="password-error" class="input-error" style="color: red; font-size: 14px;"></div>
+        </div>
+        <div>
+          <a href="{% url 'login' %}"><p>Already a user? Login here!</p></a>
+        </div>
+        <div>
+          <input type="submit" value="signup">
+        </div>
+      </form>
+      
+      <script>
+        function validateForm() {
+          let mobile = document.getElementById("mobile").value;
+          let first_name = document.getElementById("first_name").value;
+          let last_name = document.getElementById("last_name").value;
+          let password = document.getElementById("password").value;
+      
+          let mobile_error = document.getElementById("mobile-error");
+          let first_name_error = document.getElementById("first_name-error");
+          let last_name_error = document.getElementById("last_name-error");
+          let password_error = document.getElementById("password-error");
+      
+          let valid = true;
+      
+          if (mobile == "") {
+            mobile_error.innerText = "Mobile number cannot be empty";
+            valid = false;
+          } else if (mobile.length != 10) {
+            mobile_error.innerText = "Mobile number should be 10 digits";
+            valid = false;
+          } else if (mobile.startsWith("+91")) {
+            mobile_error.innerText = "Mobile number should not start with +91";
+            valid = false;
+          } else {
+            mobile_error.innerText = "";
+          }
+      
+          if (first_name == "") {
+            first_name_error.innerText = "First name cannot be empty";
+            valid = false;
+          } else {
+            first_name_error.innerText = "";
+          }
+      
+          if (last_name == "") {
+            last_name_error.innerText = "Last name cannot be empty";
+            valid = false;
+          } else {
+            last_name_error.innerText = "";
+          }
+      
+          if (password == "") {
+            password_error.innerText = "Password cannot be empty";
+            valid = false;
+          } else if (password.length < 6) {
+            password_error.innerText = "Password should be at least 6 characters";
+            valid = false;
+          } else {
+            password_error.innerText = "";
+          }
+      
+          return valid;
+        }
+      
+        let inputs = document.querySelectorAll("input");
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].addEventListener("blur", function() {
+            validateForm();
+          });
+        }
+      </script>
+      
   </div>
+  </div>
+</div>
 {% endblock content %}

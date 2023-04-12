@@ -9,6 +9,7 @@
     }
     td,th{
       text-align: center;
+      background-color: rgba(251, 252, 228, 0.732);
     }
     .container-wrapper {
         width: 50%;
@@ -41,7 +42,7 @@
     .small-table td {
         padding: 10px;
         border: 1px solid black;
-        background-color: #F9F9F9;
+        background-color: rgba(251, 252, 228, 0.732);
     }
     .container {
         width: 45%;
@@ -59,6 +60,7 @@
     .container table {
         width: 100%;
         border-collapse: collapse;
+        background-color: #fec11ac1;
     }
 
     .container td, .container th {
@@ -73,10 +75,24 @@
     h1,h3{
       text-align: center;
     }
+  body{
+    background-color: #fec11ac1;
+  }
+  label{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+  }
+  #save-btn{
+    padding:10px;
+    color: #fec11ac1;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #000000;
+  }
 </style>
 
 <h1>{{user.first_name}}'s Bag</h1>
 <h3>Drag and drop your items in you bag to your respective baskets</h3>
+
 <table class="small-table draggable">
     <thead>
     <tr >
@@ -194,7 +210,7 @@
   </div>
 </div>
 
-<button id="save-btn" href="{% url "review_order" %}">Save</button>
+<a href="{% url "review_order" %}"><button id="save-btn">Save</button></a>
 <script>
 function removeRow(button) {
   var row = button.parentNode.parentNode;

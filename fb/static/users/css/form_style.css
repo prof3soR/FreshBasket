@@ -1,81 +1,79 @@
+/* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  background-color: #fec11ac1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #262626;
+}
+
+/* Container styles */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f5f5;
 }
+h1{
+  margin-bottom: 30px;
+}
+a{
+  color: black;
+}
+/* Card content styles */
 
-.card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fff;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  border-radius: 10px;
+
+/* Card image styles */
+.card-image {
+  margin: 20px;
 }
 
 .card-image img {
-  border-radius: 50%;
+  width: 175px;
+  height: 50px;
 }
 
+/* Form container styles */
 .form-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 100%;
-  margin-top: 20px;
 }
 
+/* Form styles */
 form {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
 }
 
-label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #555;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 100%;
+form input[type="text"],
+form input[type="password"] {
+  background-color: #fafafa;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
   padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
-}
-
-.input-error {
-  font-size: 14px;
-  color: red;
   margin-bottom: 10px;
 }
 
-.input-invalid {
-  border-color: red;
-}
-
-a {
-  color: #555;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-input[type="submit"] {
-  background-color: #555;
+form input[type="submit"] {
+  background-color: #000000;
+  border: none;
+  border-radius: 3px;
   color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
+  font-weight: 600;
+  padding: 10px;
+  margin-top: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+
 }
 
-input[type="submit"]:hover {
-  background-color: #333;
+form input[type="submit"]:hover {
+  background-color: #fec11a;
 }

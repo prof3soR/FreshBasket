@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -46,3 +47,33 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.day} {self.name} {self.quantity} {self.price}"
+    
+
+
+    
+class delivary_address(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    Door_no=models.CharField(max_length=10)
+    appartment_street=models.CharField(max_length=100)
+    city=models.CharField(max_length=100)
+    state=models.CharField(max_length=100)
+    pincode=models.IntegerField()
+    defult_address=models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.user.first_name}'s address"
+
+class subscription_details(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    address=models.ForeignKey(delivary_address,on_delete=models.CASCADE)
+    from_date=models.DateField()
+    to_date=models.DateField()
+    amount=models.IntegerField()
+    payment=models.BooleanField(default=False)
+    def __str__(self):
+        return f"{self.user.first_name} Address {self.id}"
+class cancelled_orders(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    day=models.CharField(max_length=100)
+    date=models.CharField(max_length=100)
+    def __str__(self):
+        return f"{self.user}{self.day}"
